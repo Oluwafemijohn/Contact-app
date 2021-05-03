@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Decagon Android 007</string>
+    <string name="default_notification">Hi you have a message</string>
+    <string name="history_title">History</string>
+    <string name="settings_title">Settings</string>
+    <string name="name_title">Name</string>
+    <string name="recent_title">Recent</string>
+    <string name="my_center_title">My Center</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">The contact fragment has been added</string>
+    <string name="title_contact">Contact</string>
+    <string name="title_my_center">My Center</string>
+    <string name="title_recents">Recents</string>
+    <string name="bold">bold</string>
+    <string name="create_shortcut_title">Create shortcut</string>
+    <string name="set_ringtone_title">Set ringtone</string>
+    <string name="auto_call_record_title">Auto call record</string>
+    <string name="favourite_title">"Favourite "</string>
+    <string name="create_contact">Create new contact</string>
+    <string name="save_contact">SAVE</string>
+    <string name="go_back_icon">Go back icon</string>
 </resources>

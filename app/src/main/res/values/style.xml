@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="popup_theme" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <!--  To make the view lager when active  -->
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <!--  To increase the size of the text  -->
+    <style name="BottomNavigationViewActive" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+</resources>

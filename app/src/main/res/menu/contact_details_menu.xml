@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.MainActivity">
+
+    <item android:id="@+id/creat_shortcut"
+        android:title="@string/create_shortcut_title"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/set_ringtone"
+        android:title="@string/set_ringtone_title"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/auto_call_record"
+        android:title="@string/auto_call_record_title"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/favourite"
+        android:title="@string/favourite_title"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+</menu>
