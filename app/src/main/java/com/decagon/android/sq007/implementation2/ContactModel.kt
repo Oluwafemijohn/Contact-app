@@ -2,8 +2,8 @@ package com.decagon.android.sq007.implementation2
 
 import java.io.Serializable
 
-class ContactModel (
+class ContactModel(
     var contactName: String = "",
 
-    var contactNumber:String = ""
-): Serializable
+    var contactNumber: String = ""
+) : Serializable

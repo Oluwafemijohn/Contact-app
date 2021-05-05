@@ -28,8 +28,6 @@ class SaveContactActivity : AppCompatActivity() {
 
         var database = FirebaseDatabase.getInstance().reference
 
-
-
         firstName = findViewById(R.id.first_name)
         lastName = findViewById(R.id.last_name)
         phoneNumber = findViewById(R.id.saving_phone_number)
@@ -41,7 +39,7 @@ class SaveContactActivity : AppCompatActivity() {
             var firstName = firstName.text.toString().trim()
             var lastName = lastName.text.toString().trim()
             var phoneNumber = phoneNumber.text.toString().trim()
-            val contact = RecyclerModel(firstName = firstName,lastName = lastName,phoneNumber = phoneNumber)
+            val contact = RecyclerModel(firstName = firstName, lastName = lastName, phoneNumber = phoneNumber)
             contact.id = database.child("CONTACT").push().key
             database.child("CONTACT").child(contact.id!!).setValue(contact)
 
@@ -57,22 +55,22 @@ class SaveContactActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //Validate phone number
+        // Validate phone number
         phoneNumberValidation()
-        //Validate name
+        // Validate name
         firstNamevalidation()
     }
 
-    //phone number validation function
-    private fun phoneNumberValidation(){
+    // phone number validation function
+    private fun phoneNumberValidation() {
         phoneNumberValidation = findViewById(R.id.saving_phone_number)
-        phoneNumberValidation.addTextChangedListener(object: TextWatcher {
+        phoneNumberValidation.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                if (mobileValidate(phoneNumberValidation.text.toString())){
+                if (mobileValidate(phoneNumberValidation.text.toString())) {
                     save.isEnabled = true
-                } else{
+                } else {
                     save.isEnabled = false
                     phoneNumberValidation.error = "Invalid phone number"
                 }
@@ -80,15 +78,15 @@ class SaveContactActivity : AppCompatActivity() {
         })
     }
 
-    private fun firstNamevalidation(){
+    private fun firstNamevalidation() {
         fname = findViewById(R.id.first_name)
-        fname.addTextChangedListener(object: TextWatcher {
+        fname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                if (fname.text.toString() == null){
+                if (fname.text.toString() == null) {
                     save.isEnabled = true
-                } else{
+                } else {
                     save.isEnabled = false
                     fname.error = "Invalid name, please enter a name"
                 }

@@ -3,10 +3,7 @@ package com.decagon.android.sq007.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +23,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     private val adapter = RecyclerAdapter(fireBaseDataArray, this, Colors.color)
     lateinit var recyclerView: RecyclerView
     private lateinit var floatbutton: FloatingActionButton
-    private lateinit var floating_button2:FloatingActionButton
+    private lateinit var floating_button2: FloatingActionButton
 //    lateinit var toolbar:Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,19 +48,16 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             startActivity(intent)
         }
 
-
-
         displayfirebaseData()
-
-
     }
 
     private fun initRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(this, // Context
-                LinearLayoutManager.VERTICAL, // Orientation
-                false
-            ) // Reverse layout
+        recyclerView.layoutManager = LinearLayoutManager(
+            this, // Context
+            LinearLayoutManager.VERTICAL, // Orientation
+            false
+        ) // Reverse layout
         recyclerView.adapter = adapter
     }
 
@@ -78,7 +72,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         startActivity(intent)
     }
 
-     fun displayfirebaseData() {
+    fun displayfirebaseData() {
         dataBaseReference = FirebaseDatabase.getInstance().getReference("CONTACT")
 
         dataBaseReference.addValueEventListener(object : ValueEventListener {
@@ -93,7 +87,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                     }
 //                    Log.d("CHECKERS", "THIS $fireBaseDataArray")
 
-                    fireBaseDataArray.sortWith(compareBy { it.firstName})
+                    fireBaseDataArray.sortWith(compareBy { it.firstName })
                     val adapter = RecyclerAdapter(fireBaseDataArray, this@MainActivity, Colors.color)
 //                    val put = fireBaseDataArray as ArrayList<RecyclerModel>
                     recyclerView.adapter = adapter
@@ -105,7 +99,6 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             override fun onCancelled(error: DatabaseError) {}
         })
     }
-
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        val inflater: MenuInflater = menuInflater
@@ -140,6 +133,4 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 //        }
 //        true
 //    }
-
-
 }

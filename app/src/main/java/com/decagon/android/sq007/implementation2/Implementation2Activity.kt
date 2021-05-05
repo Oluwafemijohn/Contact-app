@@ -1,20 +1,17 @@
 package com.decagon.android.sq007.implementation2
 
 import android.Manifest
-import android.Manifest.permission.CALL_PHONE
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.widget.ActionMenuView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,15 +22,15 @@ import com.decagon.android.sq007.ui.ContactDetailsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
-    lateinit var floating_button2:FloatingActionButton
+    lateinit var floating_button2: FloatingActionButton
     lateinit var recyclerView2: RecyclerView
     lateinit var implementiontion2: ActionMenuView
     lateinit var contactModel: ContactModel
-    companion object{
+    companion object {
         private val TAG = "permission"
         private val CALL_PHONE = 101
         private val READ_CONTACT = 102
-        const val  readContacts_requestCode = 23
+        const val readContacts_requestCode = 23
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,29 +38,27 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
 
         checkForPermision(Manifest.permission.READ_CONTACTS, "Read_CONTACT", READ_CONTACT)
 
-
         floating_button2 = findViewById(R.id.floating_button2)
         recyclerView2 = findViewById(R.id.recycler_view2)
 
 //        readContact()
     }
 
-
-    fun readContact(){
+    fun readContact() {
         recyclerView2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            setUpPermissions(android.Manifest.permission.READ_CONTACTS, "myContacts", readContacts_requestCode)
-            val myContactList: MutableList<ContactModel> = ArrayList()
-            val myContact = contentResolver?.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
-            while (myContact?.moveToNext()!!){
-                val Name = myContact.getString(myContact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-                val Number = myContact.getString(myContact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                val modelObj = ContactModel()
-                modelObj.contactName = Name
-                modelObj.contactNumber = Number
-                myContactList.add(modelObj)
-            }
-            recyclerView2.adapter = ContactAdapter(myContactList, this, Colors.color)
-            myContact.close()
+        setUpPermissions(android.Manifest.permission.READ_CONTACTS, "myContacts", readContacts_requestCode)
+        val myContactList: MutableList<ContactModel> = ArrayList()
+        val myContact = contentResolver?.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
+        while (myContact?.moveToNext()!!) {
+            val Name = myContact.getString(myContact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+            val Number = myContact.getString(myContact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+            val modelObj = ContactModel()
+            modelObj.contactName = Name
+            modelObj.contactNumber = Number
+            myContactList.add(modelObj)
+        }
+        recyclerView2.adapter = ContactAdapter(myContactList, this, Colors.color)
+        myContact.close()
     }
 
     fun setUpPermissions(permission: String, name: String, requestCode: Int) {
@@ -73,23 +68,23 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
                     Toast.makeText(this, "$name Permission Granted", Toast.LENGTH_LONG).show()
                 }
                 shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
-                else -> ActivityCompat.requestPermissions(this , arrayOf(permission), requestCode)
+                else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
             }
         }
     }
-    private fun checkForPermision(permission:String, name:String, requestCode:Int){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            when{
+    private fun checkForPermision(permission: String, name: String, requestCode: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            when {
                 ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {
 //                    Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
                     readContact()
-                    val phoneNumber =  contactModel.contactNumber
+                    val phoneNumber = contactModel.contactNumber
                     val callIntent = Intent(Intent.ACTION_CALL)
                     callIntent.data = Uri.parse("tel: $phoneNumber")
                     startActivity(callIntent)
                 }
                 shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
-                else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode )
+                else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
             }
         }
     }
@@ -99,15 +94,15 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        fun innerCheck(name: String){
-            if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED){
+        fun innerCheck(name: String) {
+            if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(applicationContext, "$name permission refused", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
 //                Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
                 readContact()
             }
         }
-        when(requestCode){
+        when (requestCode) {
             READ_CONTACT -> innerCheck("Read_CONTACT")
         }
     }
@@ -117,8 +112,8 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
         builder.apply {
             setMessage("Permission to access your $name is required to use this app")
             setTitle("Permission required")
-            setPositiveButton("Ok"){
-                    dialog, which ->
+            setPositiveButton("Ok") {
+                dialog, which ->
                 ActivityCompat.requestPermissions(this@Implementation2Activity, arrayOf(permission), requestCode)
             }
         }
@@ -135,6 +130,4 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
         intent.putExtra("TEST", "TESTME")
         startActivity(intent)
     }
-
-
 }

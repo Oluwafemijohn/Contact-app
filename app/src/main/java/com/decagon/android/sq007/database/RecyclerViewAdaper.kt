@@ -11,7 +11,6 @@ import com.decagon.android.sq007.ui.RecyclerModel
 class RecyclerAdapter(var items: List<RecyclerModel>, private val listener: OnItemClickListener, val color: List<ContactColor>) :
     RecyclerView.Adapter<RecyclerAdapter.CardViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         return CardViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.recycler_cardview, parent, false)

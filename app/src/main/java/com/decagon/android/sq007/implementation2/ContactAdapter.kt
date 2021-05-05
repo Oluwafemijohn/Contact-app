@@ -7,15 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.decagon.android.sq007.R
 import com.decagon.android.sq007.database.ContactColor
-import com.decagon.android.sq007.ui.RecyclerModel
 
-//class ContactAdapter {
-//}
-
+// class ContactAdapter {
+// }
 
 class ContactAdapter(var items: List<ContactModel>, private val listener: OnItemClickListener, val color: List<ContactColor>) :
     RecyclerView.Adapter<ContactAdapter.CardViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         return CardViewHolder(

@@ -25,11 +25,11 @@ class ContactDetailsActivity : AppCompatActivity() {
     private lateinit var contacts: RecyclerModel
     lateinit var colors: ContactColor
     lateinit var done: TextView
-    lateinit var whatsappNumber:TextView
-    lateinit var delete:ImageView
-    lateinit var shareButton:ImageView
-    lateinit var editContact : ImageView
-    lateinit var makeCall:ImageView
+    lateinit var whatsappNumber: TextView
+    lateinit var delete: ImageView
+    lateinit var shareButton: ImageView
+    lateinit var editContact: ImageView
+    lateinit var makeCall: ImageView
     val CALL_PHONE = 101
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class ContactDetailsActivity : AppCompatActivity() {
 
 //        contacts = intent.getSerializableExtra("CONTACTS") as RecyclerModel
 
-        //To test where the intent is coming from either from Contact list View or Contact save page
+        // To test where the intent is coming from either from Contact list View or Contact save page
         var test = intent.getStringExtra("TEST")
         if (test != null && test != null) {
             recyclerDetails()
@@ -47,24 +47,21 @@ class ContactDetailsActivity : AppCompatActivity() {
 
         editContact = findViewById(R.id.edit_icon)
 
-        //The to move to the main contact list view
+        // The to move to the main contact list view
         done = findViewById(R.id.done)
         done.setOnClickListener {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
-
-
-
-        //Delecte funtion
+        // Delecte funtion
         deleteItem()
 
-        //Share contact
+        // Share contact
         shareContact()
 
         editContacts()
-        //Make call
+        // Make call
         buttonTaps()
     }
 
@@ -99,62 +96,64 @@ class ContactDetailsActivity : AppCompatActivity() {
 //        toolbarBackgroungColor.setBackgroundColor(Colors[index])
     }
 
-    fun deleteItem(){
-        //To delete an item
+    fun deleteItem() {
+        // To delete an item
         delete = findViewById(R.id.delete_icon)
-        delete.setOnClickListener{
+        delete.setOnClickListener {
 
-                var contactId =contacts.id
-                var mPostReference = FirebaseDatabase.getInstance().getReference()
-                    .child("CONTACT").child(contactId!!)
-                mPostReference.removeValue()
-                var intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+            var contactId = contacts.id
+            var mPostReference = FirebaseDatabase.getInstance().getReference()
+                .child("CONTACT").child(contactId!!)
+            mPostReference.removeValue()
+            var intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
-
-    fun shareContact(){
+    fun shareContact() {
         shareButton = findViewById(R.id.contact_share_ic)
-        shareButton.setOnClickListener{
+        shareButton.setOnClickListener {
             val shareContactIntent = Intent()
             shareContactIntent.action = Intent.ACTION_SEND
-            shareContactIntent.type="text/plain"
-            shareContactIntent.putExtra(Intent.EXTRA_TEXT, "Share name is: ${contacts.firstName
-                    + " " + contacts.lastName} and the number is ${contacts.phoneNumber}");
-            startActivity(Intent.createChooser(shareContactIntent,getString(R.string.send_to)))
+            shareContactIntent.type = "text/plain"
+            shareContactIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                "Share name is: ${contacts.firstName +
+                    " " + contacts.lastName} and the number is ${contacts.phoneNumber}"
+            )
+            startActivity(Intent.createChooser(shareContactIntent, getString(R.string.send_to)))
         }
     }
 
-    private fun editContacts(){
+    private fun editContacts() {
         editContact.setOnClickListener {
             val intent = Intent(this, EditContact::class.java)
-            intent.putExtra("ContactName",contactName.text)
-            intent.putExtra("PhoneNumber",phoneNumber.text)
-            intent.putExtra("ContactId",contacts.id)
+            intent.putExtra("ContactName", contactName.text)
+            intent.putExtra("PhoneNumber", phoneNumber.text)
+            intent.putExtra("ContactId", contacts.id)
 
             startActivity(intent)
         }
     }
 
-    private fun buttonTaps(){
+    private fun buttonTaps() {
         makeCall = findViewById(R.id.make_call)
-        makeCall.setOnClickListener(){
-                checkForPermision(android.Manifest.permission.CALL_PHONE, "call", CALL_PHONE)
-            }
+        makeCall.setOnClickListener() {
+            checkForPermision(android.Manifest.permission.CALL_PHONE, "call", CALL_PHONE)
+        }
     }
-    private fun checkForPermision(permission:String, name:String, requestCode:Int){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            when{
+    private fun checkForPermision(permission: String, name: String, requestCode: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            when {
                 ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {
 //                    Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
-                    val phoneNumber =  contacts.phoneNumber
+                    val phoneNumber = contacts.phoneNumber
                     val callIntent = Intent(Intent.ACTION_CALL)
                     callIntent.data = Uri.parse("tel: $phoneNumber")
                     startActivity(callIntent)
                 }
                 shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
-                else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode )
+                else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
             }
         }
     }
@@ -164,14 +163,14 @@ class ContactDetailsActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        fun innerCheck(name: String){
-            if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED){
+        fun innerCheck(name: String) {
+            if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(applicationContext, "$name permission refused", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
 //                Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
             }
         }
-        when(requestCode){
+        when (requestCode) {
             CALL_PHONE -> innerCheck("Calls ")
         }
     }
@@ -180,8 +179,8 @@ class ContactDetailsActivity : AppCompatActivity() {
         builder.apply {
             setMessage("Permission to access your $name is required to use this app")
             setTitle("Permission required")
-            setPositiveButton("Ok"){
-                    dialog, which ->
+            setPositiveButton("Ok") {
+                dialog, which ->
                 ActivityCompat.requestPermissions(this@ContactDetailsActivity, arrayOf(permission), requestCode)
             }
         }

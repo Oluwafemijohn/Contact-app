@@ -5,7 +5,7 @@ import java.io.Serializable
 
 data class RecyclerModel(
     @Exclude
-    var id : String? = null,
+    var id: String? = null,
     var firstName: String? = "",
     var lastName: String? = "",
     var phoneNumber: String? = ""
