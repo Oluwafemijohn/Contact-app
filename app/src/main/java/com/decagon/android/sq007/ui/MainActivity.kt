@@ -3,6 +3,8 @@ package com.decagon.android.sq007.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         setContentView(R.layout.activity_main)
 
         initRecyclerView()
+
+        setSupportActionBar(findViewById(R.id.contact_one_tool_bar))
 
         recyclerView = findViewById(R.id.recycler_view)
         floatbutton = findViewById(R.id.floating_button)
@@ -88,7 +92,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 //                    Log.d("CHECKERS", "THIS $fireBaseDataArray")
 
                     fireBaseDataArray.sortWith(compareBy { it.firstName })
-                    val adapter = RecyclerAdapter(fireBaseDataArray, this@MainActivity, Colors.color)
+                    val adapter =
+                        RecyclerAdapter(fireBaseDataArray, this@MainActivity, Colors.color)
 //                    val put = fireBaseDataArray as ArrayList<RecyclerModel>
                     recyclerView.adapter = adapter
 
@@ -100,12 +105,12 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         })
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        val inflater: MenuInflater = menuInflater
-//        inflater.inflate(R.menu.top_menu, menu)
-//        Log.d("CALLS", "does it call")
-//        return true
-//    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.top_menu, menu)
+        Log.d("CALLS", "does it call")
+        return true
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 

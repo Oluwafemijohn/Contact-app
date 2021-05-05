@@ -1,5 +1,6 @@
 package com.decagon.android.sq007.implementation2
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +16,15 @@ class ContactAdapter(var items: List<ContactModel>, private val listener: OnItem
     RecyclerView.Adapter<ContactAdapter.CardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
+        Log.d("Adapter", "onCreateViewHolder: $items")
         return CardViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.recycler_cardview, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+        Log.d("Adapter", "onCreateViewHolder: ${items[position]}")
+
         holder.bind(items[position], color.random())
     }
 

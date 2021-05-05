@@ -3,10 +3,10 @@ package com.decagon.android.sq007.implementation2
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.widget.ActionMenuView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -26,6 +26,8 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
     lateinit var recyclerView2: RecyclerView
     lateinit var implementiontion2: ActionMenuView
     lateinit var contactModel: ContactModel
+    lateinit var readContactAdapter: ContactAdapter
+    private val contactsList = ArrayList<ContactModel>()
     companion object {
         private val TAG = "permission"
         private val CALL_PHONE = 101
@@ -36,52 +38,53 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_implementation2)
 
+        recyclerView2 = findViewById(R.id.recycler_view2)
+
         checkForPermision(Manifest.permission.READ_CONTACTS, "Read_CONTACT", READ_CONTACT)
 
         floating_button2 = findViewById(R.id.floating_button2)
-        recyclerView2 = findViewById(R.id.recycler_view2)
+
+        readContactAdapter = ContactAdapter(contactsList, this, Colors.color)
+        recyclerView2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView2.adapter = readContactAdapter
 
 //        readContact()
     }
 
     fun readContact() {
-        recyclerView2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        setUpPermissions(android.Manifest.permission.READ_CONTACTS, "myContacts", readContacts_requestCode)
-        val myContactList: MutableList<ContactModel> = ArrayList()
-        val myContact = contentResolver?.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
-        while (myContact?.moveToNext()!!) {
+        val myContact = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
+        while (myContact?.moveToNext() == true) {
             val Name = myContact.getString(myContact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
             val Number = myContact.getString(myContact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-            val modelObj = ContactModel()
-            modelObj.contactName = Name
-            modelObj.contactNumber = Number
-            myContactList.add(modelObj)
+            val modelObj = ContactModel(contactName = Name, contactNumber = Number)
+            contactsList.add(modelObj)
+            Log.d("readContact", "readContact: $modelObj")
         }
-        recyclerView2.adapter = ContactAdapter(myContactList, this, Colors.color)
-        myContact.close()
+        myContact?.close()
     }
 
-    fun setUpPermissions(permission: String, name: String, requestCode: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            when {
-                ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
-                    Toast.makeText(this, "$name Permission Granted", Toast.LENGTH_LONG).show()
-                }
-                shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
-                else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
-            }
-        }
-    }
+//    fun setUpPermissions(permission: String, name: String, requestCode: Int) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            when {
+//                ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
+//                    Toast.makeText(this, "$name Permission Granted", Toast.LENGTH_LONG).show()
+//                }
+//                shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
+//                else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
+//            }
+//        }
+//    }
     private fun checkForPermision(permission: String, name: String, requestCode: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             when {
-                ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {
+                ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED -> {
 //                    Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
                     readContact()
-                    val phoneNumber = contactModel.contactNumber
-                    val callIntent = Intent(Intent.ACTION_CALL)
-                    callIntent.data = Uri.parse("tel: $phoneNumber")
-                    startActivity(callIntent)
+
+//                    val phoneNumber = contactModel.contactNumber
+//                    val callIntent = Intent(Intent.ACTION_CALL)
+//                    callIntent.data = Uri.parse("tel: $phoneNumber")
+//                    startActivity(callIntent)
                 }
                 shouldShowRequestPermissionRationale(permission) -> showDialog(permission, name, requestCode)
                 else -> ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
@@ -100,6 +103,9 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
             } else {
 //                Toast.makeText(applicationContext, "$name permission granted", Toast.LENGTH_SHORT).show()
                 readContact()
+                readContactAdapter = ContactAdapter(contactsList, this, Colors.color)
+                recyclerView2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                recyclerView2.adapter = readContactAdapter
             }
         }
         when (requestCode) {

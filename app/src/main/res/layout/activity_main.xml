@@ -19,21 +19,20 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar_inner_constrain"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="@drawable/toobar_border"
+                android:clickable="true"
                 android:drawableLeft="@drawable/ic_baseline_search_24"
                 android:drawablePadding="@dimen/padding_5dp"
                 android:hint="Search"
-                android:clickable="true"
+                android:inputType="textNoSuggestions"
                 android:paddingLeft="@dimen/padding_10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:inputType="textNoSuggestions" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -73,6 +72,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
