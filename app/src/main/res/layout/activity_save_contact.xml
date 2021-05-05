@@ -193,6 +193,7 @@
                 android:layout_marginStart="68dp"
                 android:layout_marginTop="24dp"
                 android:hint="Phone"
+                android:inputType="number"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/last_name"
                 app:layout_constraintWidth_percent=".7" />

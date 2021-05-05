@@ -19,4 +19,7 @@
     <string name="create_contact">Create new contact</string>
     <string name="save_contact">SAVE</string>
     <string name="go_back_icon">Go back icon</string>
+    <string name="send_to">Select app</string>
+    <string name="editContact">Edit Contact</string>
+    <string name="implementation2_title">Implemetation 2</string>
 </resources>
