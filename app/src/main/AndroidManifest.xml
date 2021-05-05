@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DecagonAndroid007">
-        <activity android:name=".implementation2.Implementation2Activity"></activity>
+        <activity android:name=".implementation2.Implementation2Activity" />
         <activity android:name=".ui.ContactDetailsActivity" />
         <activity android:name=".ui.SaveContactActivity" />
         <activity android:name=".ui.EditContact" />
