@@ -25,79 +25,68 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     private val adapter = RecyclerAdapter(fireBaseDataArray, this, Colors.color)
     lateinit var recyclerView: RecyclerView
     private lateinit var floatbutton: FloatingActionButton
-    private lateinit var floating_button2: FloatingActionButton
-//    lateinit var toolbar:Toolbar
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        //Getting ids
+        recyclerView = findViewById(R.id.recycler_view)
+        floatbutton = findViewById(R.id.floating_button)
+        //Connect to database
+        dataBaseReference = FirebaseDatabase.getInstance().getReference("CONTACT")
+        //Load the itemViews
         initRecyclerView()
 
         setSupportActionBar(findViewById(R.id.contact_one_tool_bar))
-
-        recyclerView = findViewById(R.id.recycler_view)
-        floatbutton = findViewById(R.id.floating_button)
-        floating_button2 = findViewById(R.id.floating_button2)
-
-//        toolbar = findViewById(R.id.contact_one_tool_bar)
-
         floatbutton.setOnClickListener {
             val intent = Intent(this, SaveContactActivity::class.java)
             startActivity(intent)
+
         }
 
-        floating_button2.setOnClickListener {
-            val intent = Intent(this, Implementation2Activity::class.java)
-            startActivity(intent)
-        }
-
+        //Read and display the contacts from database
         displayfirebaseData()
     }
-
+    //Load the itemViews
     private fun initRecyclerView() {
-        recyclerView = findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(
-            this, // Context
-            LinearLayoutManager.VERTICAL, // Orientation
-            false
-        ) // Reverse layout
+//        recyclerView.layoutManager = LinearLayoutManager(this )
         recyclerView.adapter = adapter
     }
 
+    //Setting the listener to the view
     override fun onItemClick(position: Int, items: List<RecyclerModel>, color: List<ContactColor>) {
-//        Toast.makeText(this, "$position", Toast.LENGTH_SHORT).show()
         val contacts = items[position]
         val colors = color[position]
+        //Going to the contact details page
         val intent = Intent(this, ContactDetailsActivity::class.java)
         intent.putExtra("CONTACTS", contacts)
         intent.putExtra("COLORS", colors)
         intent.putExtra("TEST", "TESTME")
         startActivity(intent)
+
     }
-
+    //Read and display the contacts from database
     fun displayfirebaseData() {
-        dataBaseReference = FirebaseDatabase.getInstance().getReference("CONTACT")
-
         dataBaseReference.addValueEventListener(object : ValueEventListener {
+            //Looping through the contacts in firebase and adding it to local storage
             override fun onDataChange(snapshot: DataSnapshot) {
+                //clearing the previous contacts before looping and adding to the lis
                 fireBaseDataArray.clear()
                 if (snapshot.exists()) {
                     for (userSnapshot in snapshot.children) {
                         val phoneContacts = userSnapshot.getValue<RecyclerModel>()
+                        //To check if the contact is not null
                         if (phoneContacts != null) {
                             fireBaseDataArray.add(phoneContacts)
                         }
                     }
-//                    Log.d("CHECKERS", "THIS $fireBaseDataArray")
-
+                    //Sorting the contacts in the list and attaching it to the adapter
                     fireBaseDataArray.sortWith(compareBy { it.firstName })
                     val adapter =
                         RecyclerAdapter(fireBaseDataArray, this@MainActivity, Colors.color)
-//                    val put = fireBaseDataArray as ArrayList<RecyclerModel>
                     recyclerView.adapter = adapter
-
-                    // adapter.notifyDataSetChanged()
                 }
             }
 
@@ -105,37 +94,26 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         })
     }
 
+    //To inflate the menu
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.top_menu, menu)
-        Log.d("CALLS", "does it call")
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        Log.d("CALLS", "does it call item selected")
         // Handle item selection
         return when (item.itemId) {
-            R.id.implementation2 -> {
-                Log.d("CALLS", "does it call inside")
+            R.id.implementation -> {
                 var intent = Intent(this, Implementation2Activity::class.java)
                 startActivity(intent)
+
                 true
             }
             else -> {
-                Log.d("CALLS", "does it call inside doesnt recognize")
                 super.onOptionsItemSelected(item)
             }
         }
     }
 
-//    toolbar.inflateMenu(R.menu.top_menu)
-//
-//    toolbar.setOnMenuItemClickListener {
-//        when(it.itemId) {
-//            R.id.implementation2 -> //your code
-//        }
-//        true
-//    }
 }

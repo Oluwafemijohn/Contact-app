@@ -1,6 +1,5 @@
 package com.decagon.android.sq007.implementation2
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,29 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.decagon.android.sq007.R
 import com.decagon.android.sq007.database.ContactColor
 
-// class ContactAdapter {
-// }
-
-class ContactAdapter(var items: List<ContactModel>, private val listener: OnItemClickListener, val color: List<ContactColor>) :
-    RecyclerView.Adapter<ContactAdapter.CardViewHolder>() {
+// Contact list adaperter
+class RecyclerAdapter(var items: List<ContactModel>, private val listener: OnItemClickListener, val color: List<ContactColor>) :
+    RecyclerView.Adapter<RecyclerAdapter.CardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        Log.d("Adapter", "onCreateViewHolder: $items")
-        return CardViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.recycler_cardview, parent, false)
-        )
+        return CardViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recycler_cardview, parent, false))
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        Log.d("Adapter", "onCreateViewHolder: ${items[position]}")
-
         holder.bind(items[position], color.random())
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
-
+    //Setting listener to the view tha was clicked
     inner class CardViewHolder constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
@@ -46,11 +38,12 @@ class ContactAdapter(var items: List<ContactModel>, private val listener: OnItem
             logo.text = contactModel.contactName!!.take(1)
             logo.setBackgroundColor(color.color)
         }
-
+        // Set onclick listener to the item view
         init {
             itemView.setOnClickListener(this)
         }
 
+        //handle the position that was clicked
         override fun onClick(v: View?) {
             val position: Int = adapterPosition
             if (position != RecyclerView.NO_POSITION) {

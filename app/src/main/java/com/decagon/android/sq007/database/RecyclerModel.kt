@@ -8,7 +8,7 @@ data class RecyclerModel(
     var id: String? = null,
     var firstName: String? = "",
     var lastName: String? = "",
-    var phoneNumber: String? = ""
+    var phoneNumber: String? = "",
 //    var color:Int
 
 ) : Serializable

@@ -25,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:padding="@dimen/padding_10dp"
                 android:contentDescription="@string/go_back_icon"
                 android:src="@drawable/ic_baseline_arrow_back_ios_24"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -44,11 +45,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
 
-            <TextView
+            <Button
                 android:id="@+id/save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
+                android:backgroundTint="@color/white"
+                android:enabled="false"
                 android:text="@string/save_contact"
                 android:textColor="@color/blue"
                 app:layout_constraintBottom_toBottomOf="parent"

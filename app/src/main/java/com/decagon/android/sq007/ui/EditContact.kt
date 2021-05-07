@@ -2,6 +2,7 @@ package com.decagon.android.sq007.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,8 +15,9 @@ class EditContact : AppCompatActivity() {
     lateinit var edtFirstName: EditText
     lateinit var edtLastName: EditText
     lateinit var phoneNumber: EditText
-    lateinit var save: TextView
-    lateinit var back: ImageView
+    lateinit var saveButton: Button
+    lateinit var backButton: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_contact)
@@ -27,8 +29,8 @@ class EditContact : AppCompatActivity() {
         edtFirstName = findViewById(R.id.first_name)
         edtLastName = findViewById(R.id.last_name)
         phoneNumber = findViewById(R.id.saving_phone_number)
-        save = findViewById(R.id.save)
-        back = findViewById(R.id.go_back_arrow)
+        saveButton = findViewById(R.id.save)
+        backButton = findViewById(R.id.go_back_arrow)
 
         val fullName = intent.getStringExtra("ContactName")
         val phoneNumberr = intent.getStringExtra("PhoneNumber")
@@ -39,24 +41,31 @@ class EditContact : AppCompatActivity() {
         edtLastName.setText(lastName)
         phoneNumber.setText(phoneNumberr)
 
-        save.setOnClickListener {
+        //Saving the edited contacts
+        saveButton.isEnabled = true
+        saveButton.setOnClickListener {
 
             var newFirstName = edtFirstName.text.toString().trim()
             var newLastName = edtLastName.text.toString().trim()
             var phoneNumber = phoneNumber.text.toString().trim()
-//            Log.d("EditContact", "onCreate: $contactId $newFirstName $newLastName")
-            database.child("CONTACT").child(contactId!!).setValue(RecyclerModel(id = contactId, firstName = newFirstName, lastName = newLastName, phoneNumber = phoneNumber))
-
+            //Saving with the unieq ID
+            database.child("CONTACT").child(contactId!!)
+                .setValue(RecyclerModel(id = contactId, firstName = newFirstName, lastName = newLastName, phoneNumber = phoneNumber))
+            //Moving to the details page
             val intent = Intent(this, ContactDetailsActivity::class.java)
+
             intent.putExtra("FirstName", newFirstName)
             intent.putExtra("LastName", newLastName)
             intent.putExtra("PhoneNumber", phoneNumber)
             startActivity(intent)
         }
 
-        back.setOnClickListener {
+
+        //back button
+        backButton.setOnClickListener {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }

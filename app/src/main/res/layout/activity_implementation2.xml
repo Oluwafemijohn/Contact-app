@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    style="@style/match_parent_match_parent">
 
+<!--    Toolbar-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/contact_one_tool_bar2"
         android:layout_width="match_parent"
@@ -13,15 +13,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/top_menu"
+        app:menu="@menu/implementation_two_top_menu"
         app:popupTheme="@style/popup_theme">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar_inner_constrain2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            style="@style/match_parent_match_parent"
            >
-
+<!--            search bar-->
             <EditText
                 android:id="@+id/search_view_edit_text"
                 android:layout_width="match_parent"
@@ -40,6 +39,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+<!--    Recycler -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scrollview2"
         android:layout_width="match_parent"
@@ -52,18 +52,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/nested_scrollview_inner_constrain2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            style="@style/match_parent_match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/contact_list_fragment_constrain2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                style="@style/match_parent_match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    style="@style/match_parent_match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -75,13 +75,5 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

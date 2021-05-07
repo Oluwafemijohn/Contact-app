@@ -22,4 +22,6 @@
     <string name="send_to">Select app</string>
     <string name="editContact">Edit Contact</string>
     <string name="implementation2_title">Implemetation 2</string>
+    <string name="implementation1_title">Implemetation 1</string>
+    <string name="read_contact_permission_title">Grant contact permission</string>
 </resources>
