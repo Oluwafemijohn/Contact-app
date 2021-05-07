@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,31 +24,28 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
     private lateinit var readRecyclerAdapter: RecyclerAdapter
     lateinit var toolbar: androidx.appcompat.widget.Toolbar
 
-
     companion object {
         private const val READ_CONTACT = 102
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_implementation2)
 
-        //creating the instance of the adapter
+        // creating the instance of the adapter
         readRecyclerAdapter = RecyclerAdapter(contactsList, this, Colors.color)
         recyclerView2 = findViewById(R.id.recycler_view2)
 
-        //Checking for permission and then reading the contact
+        // Checking for permission and then reading the contact
         checkForPermision(Manifest.permission.READ_CONTACTS, "FemiApp", READ_CONTACT)
 
         toolbar = findViewById(R.id.contact_one_tool_bar2)
 
         toolbar.setOnMenuItemClickListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.implementation_2 -> {
                     finish()
                     true
-
                 }
                 R.id.grant_permission -> {
                     checkForPermision(Manifest.permission.READ_CONTACTS, "FemiApp", READ_CONTACT)
@@ -60,8 +56,6 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
                 }
             }
         }
-
-
     }
 
     fun readContact() {
@@ -75,7 +69,7 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
         // Setting limit to the number of contact to load
         var count = 0
         while (myContact?.moveToNext() == true && count < 100) {
-            //Getting the contact loaded
+            // Getting the contact loaded
             val name =
                 myContact.getString(myContact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
             val number =
@@ -84,7 +78,7 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
             contactsList.add(modelObj)
             count++
         }
-        //Attaching adapter
+        // Attaching adapter
         readRecyclerAdapter = RecyclerAdapter(contactsList, this, Colors.color)
         recyclerView2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView2.adapter = readRecyclerAdapter
@@ -92,7 +86,7 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
         myContact?.close()
     }
 
-    //checking for permission
+    // checking for permission
     private fun checkForPermision(permission: String, name: String, requestCode: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             when {
@@ -100,9 +94,8 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
                     this,
                     permission
                 ) == PackageManager.PERMISSION_GRANTED -> {
-                    //call read contact function
+                    // call read contact function
                     readContact()
-
                 }
                 shouldShowRequestPermissionRationale(permission) -> showDialog(
                     permission,
@@ -114,7 +107,7 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
         }
     }
 
-    //check for permission and make call
+    // check for permission and make call
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -135,7 +128,7 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
         }
     }
 
-    //Show dialog for permission dialog
+    // Show dialog for permission dialog
     private fun showDialog(permission: String, name: String, requestCode: Int) {
         val builder = AlertDialog.Builder(this)
         builder.apply {
@@ -153,7 +146,7 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
         dialog.show()
     }
 
-    //onCLick listener to item view
+    // onCLick listener to item view
     override fun onItemClick(position: Int, items: List<ContactModel>, color: List<ContactColor>) {
         val contacts = items[position]
         val colors = color[position]
@@ -176,8 +169,8 @@ class Implementation2Activity : AppCompatActivity(), OnItemClickListener {
 //        // Handle item selection
 //        return when (item.itemId) {
 //            R.id.implementation_2 -> {
-////                var intent = Intent(this, MainActivity::class.java)
-////                startActivity(intent)
+// //                var intent = Intent(this, MainActivity::class.java)
+// //                startActivity(intent)
 //                onBackPressed()
 //                true
 //            }

@@ -23,7 +23,7 @@ class RecyclerAdapter(var items: List<ContactModel>, private val listener: OnIte
     override fun getItemCount(): Int {
         return items.size
     }
-    //Setting listener to the view tha was clicked
+    // Setting listener to the view tha was clicked
     inner class CardViewHolder constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
@@ -43,7 +43,7 @@ class RecyclerAdapter(var items: List<ContactModel>, private val listener: OnIte
             itemView.setOnClickListener(this)
         }
 
-        //handle the position that was clicked
+        // handle the position that was clicked
         override fun onClick(v: View?) {
             val position: Int = adapterPosition
             if (position != RecyclerView.NO_POSITION) {

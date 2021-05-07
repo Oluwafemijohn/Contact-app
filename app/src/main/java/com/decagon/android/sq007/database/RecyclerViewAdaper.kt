@@ -1,8 +1,5 @@
 package com.decagon.android.sq007.database
 
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +12,7 @@ class RecyclerAdapter(var items: List<RecyclerModel>, private val listener: OnIt
     RecyclerView.Adapter<RecyclerAdapter.CardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        //call the inner class
+        // call the inner class
         return CardViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.recycler_cardview, parent, false)
         )
@@ -31,7 +28,7 @@ class RecyclerAdapter(var items: List<RecyclerModel>, private val listener: OnIt
 
     inner class CardViewHolder constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView),
-        //Setting View listener to the item in the list
+        // Setting View listener to the item in the list
         View.OnClickListener {
         private val name: TextView = itemView.findViewById(R.id.contact_name)
         private val phoneNumber = itemView.findViewById<TextView>(R.id.phone_number)
@@ -41,14 +38,11 @@ class RecyclerAdapter(var items: List<RecyclerModel>, private val listener: OnIt
         fun bind(recyclerModel: RecyclerModel, color: ContactColor) {
             name.text = recyclerModel.firstName + " " + recyclerModel.lastName
             phoneNumber.text = recyclerModel.phoneNumber
-            //The taking the first letter of the name to logo
+            // The taking the first letter of the name to logo
             logo.text = recyclerModel.firstName!!.take(1)
             logo.setBackgroundColor(color.color)
-
-
-
         }
-        //Setting onclick listener to the itemView
+        // Setting onclick listener to the itemView
 
         init {
             itemView.setOnClickListener(this)

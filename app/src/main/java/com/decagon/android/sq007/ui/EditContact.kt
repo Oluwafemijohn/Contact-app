@@ -41,17 +41,17 @@ class EditContact : AppCompatActivity() {
         edtLastName.setText(lastName)
         phoneNumber.setText(phoneNumberr)
 
-        //Saving the edited contacts
+        // Saving the edited contacts
         saveButton.isEnabled = true
         saveButton.setOnClickListener {
 
             var newFirstName = edtFirstName.text.toString().trim()
             var newLastName = edtLastName.text.toString().trim()
             var phoneNumber = phoneNumber.text.toString().trim()
-            //Saving with the unieq ID
+            // Saving with the unieq ID
             database.child("CONTACT").child(contactId!!)
                 .setValue(RecyclerModel(id = contactId, firstName = newFirstName, lastName = newLastName, phoneNumber = phoneNumber))
-            //Moving to the details page
+            // Moving to the details page
             val intent = Intent(this, ContactDetailsActivity::class.java)
 
             intent.putExtra("FirstName", newFirstName)
@@ -60,8 +60,7 @@ class EditContact : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-        //back button
+        // back button
         backButton.setOnClickListener {
             var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

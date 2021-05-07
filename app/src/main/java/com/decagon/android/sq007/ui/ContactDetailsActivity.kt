@@ -53,11 +53,9 @@ class ContactDetailsActivity : AppCompatActivity() {
         var implementationIntent = intent.getStringExtra("IMPLEMENTATION")
         if (test != null && test != null) {
             firebaseDatabaseContactDetails()
-        }
-        else if (implementationIntent != null){
+        } else if (implementationIntent != null) {
             myPhoneContactListDetails()
-        }
-        else {
+        } else {
             savedContactDetails()
         }
 
@@ -79,57 +77,54 @@ class ContactDetailsActivity : AppCompatActivity() {
         makeCallAfterPermissionChecked()
     }
 
-
-    //Display the details when view is click from Implementation 2 contact list
-    private fun myPhoneContactListDetails(){
-        //Getting the contact from the intent
+    // Display the details when view is click from Implementation 2 contact list
+    private fun myPhoneContactListDetails() {
+        // Getting the contact from the intent
         var implementationTwoContact = intent.getSerializableExtra("CONTACTS") as ContactModel
-        var implementationTwoColor:ContactColor = intent.getSerializableExtra("COLORS") as ContactColor
-        //attach the name and number to text field
+        var implementationTwoColor: ContactColor = intent.getSerializableExtra("COLORS") as ContactColor
+        // attach the name and number to text field
         contactName.text = implementationTwoContact.contactName
         whatsAppNumber.text = implementationTwoContact.contactNumber
         phoneNumber.text = implementationTwoContact.contactNumber
         toolbarBackgroundColor.setBackgroundColor(implementationTwoColor.color)
     }
 
-
-    //Display the details when the view is clicked from the implementation 2
-    private fun firebaseDatabaseContactDetails(){
-        //Getting the contact from the intent
+    // Display the details when the view is clicked from the implementation 2
+    private fun firebaseDatabaseContactDetails() {
+        // Getting the contact from the intent
         colors = intent.getSerializableExtra("COLORS") as ContactColor
         contacts = intent.getSerializableExtra("CONTACTS") as RecyclerModel
-        //attaching it to the text field
+        // attaching it to the text field
         contactName.text = contacts.firstName + " " + contacts.lastName
         phoneNumber.text = contacts.phoneNumber
         whatsAppNumber.text = contacts.phoneNumber
         toolbarBackgroundColor.setBackgroundColor(colors.color)
     }
 
-
-    //Display the details when the contact is saved
+    // Display the details when the contact is saved
     fun savedContactDetails() {
-        //Getting the contact when saved
+        // Getting the contact when saved
         var fNmae = intent.getStringExtra("FirstName")
         var lName = intent.getStringExtra("LastName")
         var pNumber = intent.getStringExtra("PhoneNumber")
-        //Setting the details
+        // Setting the details
         contactName.text = fNmae + " " + lName
         phoneNumber.text = pNumber
         whatsAppNumber.text = pNumber
     }
 
-    //Delete the contact
+    // Delete the contact
     fun deleteContact() {
-            var contactId = contacts.id
-            var mPostReference = FirebaseDatabase.getInstance().getReference()
-                .child("CONTACT").child(contactId!!)
-            mPostReference.removeValue()
-            var intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+        var contactId = contacts.id
+        var mPostReference = FirebaseDatabase.getInstance().getReference()
+            .child("CONTACT").child(contactId!!)
+        mPostReference.removeValue()
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
-    //Confirm to delete the contact
+    // Confirm to delete the contact
     private fun deleteContactConfirmation() {
         deleteButton.setOnClickListener {
             AlertDialog.Builder(this).also {
@@ -151,7 +146,7 @@ class ContactDetailsActivity : AppCompatActivity() {
         }
     }
 
-    //share contact
+    // share contact
     fun shareContact() {
         shareButton.setOnClickListener {
             val shareContactIntent = Intent()
@@ -166,7 +161,7 @@ class ContactDetailsActivity : AppCompatActivity() {
         }
     }
 
-    //Editing contact intent
+    // Editing contact intent
     private fun editContacts() {
         editContact.setOnClickListener {
             val intent = Intent(this, EditContact::class.java)
@@ -178,15 +173,15 @@ class ContactDetailsActivity : AppCompatActivity() {
         }
     }
 
-    //Check permission status and making call
+    // Check permission status and making call
     private fun makeCallAfterPermissionChecked() {
         makeCallButton.setOnClickListener() {
             checkForPermission(android.Manifest.permission.CALL_PHONE, "call", CALL_PHONE)
         }
     }
 
-    //Checking the permission status
-    private fun checkForPermission(permission: String, name: String, requestCode: Int, ) {
+    // Checking the permission status
+    private fun checkForPermission(permission: String, name: String, requestCode: Int,) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             when {
                 ContextCompat.checkSelfPermission(applicationContext, permission) == PackageManager.PERMISSION_GRANTED -> {
@@ -198,15 +193,15 @@ class ContactDetailsActivity : AppCompatActivity() {
         }
     }
 
-    //Make call when permission is granted
-    private fun makePhoneCall(){
+    // Make call when permission is granted
+    private fun makePhoneCall() {
         val contactNumber = phoneNumber.text.toString()
         val callIntent = Intent(Intent.ACTION_CALL)
         callIntent.data = Uri.parse("tel: $contactNumber")
         startActivity(callIntent)
     }
 
-    //make call interface after the permission has been granted
+    // make call interface after the permission has been granted
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         fun innerCheck(name: String) {
             if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
@@ -220,7 +215,7 @@ class ContactDetailsActivity : AppCompatActivity() {
             CALL_PHONE -> innerCheck("Calls ")
         }
     }
-    //Show dialog box to request for permission when not granted the first time
+    // Show dialog box to request for permission when not granted the first time
     private fun showDialog(permission: String, name: String, requestCode: Int) {
         val builder = AlertDialog.Builder(this)
         builder.apply {

@@ -23,6 +23,4 @@ object Colors {
         ContactColor(Color.rgb(30, 182, 255)),
         ContactColor(Color.rgb(187, 134, 252))
     )
-
-
 }
