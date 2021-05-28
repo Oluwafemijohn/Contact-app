@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         // Handle item selection
         return when (item.itemId) {
             R.id.implementation -> {
-                var intent = Intent(this, Implementation2Activity::class.java)
+                var intent = Intent(this, Implementation2Activity ::class.java)
                 startActivity(intent)
 
                 true
